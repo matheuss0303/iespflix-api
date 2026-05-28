@@ -1,112 +1,103 @@
-# IESPFLIX API
+# 🎬 IespFlix
 
-API REST desenvolvida com Spring Boot para gerenciamento de conteúdos da plataforma IESPFLIX.
+Projeto Full Stack desenvolvido como atividade acadêmica do Centro Universitário UNIESP.
 
-## Tecnologias utilizadas
+## 📖 Sobre o Projeto
+
+O IespFlix é uma plataforma inspirada na Netflix para gerenciamento e exibição de filmes e séries.
+
+O sistema permite visualizar conteúdos, pesquisar títulos, favoritar, marcar como assistido e administrar o catálogo através de uma interface moderna desenvolvida em React.
+
+## 🚀 Tecnologias Utilizadas
+
+### Frontend
+
+* React
+* Vite
+* Axios
+* CSS3
+
+### Backend
 
 * Java 17
 * Spring Boot 3
-* Spring Web
 * Spring Data JPA
-* Bean Validation
 * Flyway
+* Maven
+
+### Banco de Dados
+
 * H2 Database
-* Lombok
-* Swagger / OpenAPI
 
----
+## ✨ Funcionalidades
 
-## Funcionalidades
+* Login visual
+* Listagem de filmes e séries
+* Busca por título
+* Sistema de favoritos
+* Sistema de conteúdos assistidos
+* Destaque principal (Hero Banner)
+* Top 10 conteúdos
+* Cadastro de novos conteúdos
+* Edição de conteúdos
+* Exclusão de conteúdos
+* Reprodução de trailers
+* Interface inspirada na Netflix
+* Identidade visual institucional UNIESP
 
-### Conteúdos
+## 📂 Estrutura do Projeto
 
-* Criar conteúdo
-* Listar conteúdos
-* Buscar conteúdo por ID
-* Atualizar conteúdo
-* Remover conteúdo
+iespflix/
+├── backend-springboot
+├── frontend-react
+├── db/migration
+└── README.md
 
-### Filtros e consultas
+## ⚙️ Como Executar
 
-* Buscar por título
-* Buscar por gênero
-* Buscar por tipo
-* Ordenação por título
-
-### Extras
-
-* Tratamento global de exceções
-* Persistência com H2
-* Documentação Swagger
-* Validações com Bean Validation
-
----
-
-## Estrutura do Projeto
-
-```text
-src/main/java
- ├── controller
- ├── dto
- ├── entity
- ├── enums
- ├── exception
- ├── repository
- └── service
-```
-
----
-
-## Como executar o projeto
-
-### Clonar repositório
-
-```bash
-git clone https://github.com/SEU-USUARIO/iespflix-api.git
-```
-
----
-
-### Entrar na pasta
-
-```bash
-cd iespflix-api
-```
-
----
-
-### Executar aplicação
+### Backend
 
 ```bash
 mvn spring-boot:run
 ```
 
----
-
-## Swagger
-
-Documentação da API:
+Servidor:
 
 ```text
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8080
 ```
 
----
+### Frontend
 
-## H2 Console
+```bash
+npm install
+npm run dev
+```
+
+Aplicação:
 
 ```text
-http://localhost:8080/h2-console
+http://localhost:5173
 ```
 
-### JDBC URL
+## 📸 Demonstração
 
-```text
-jdbc:h2:file:./data/iespflix
-```
+Tela principal estilo Netflix com:
 
----
+* Banner de destaque
+* Catálogo de filmes e séries
+* Sistema de pesquisa
+* Área administrativa
+* Favoritos e assistidos
 
-## Autores
+## 👨‍💻 Autor
 
-Matheus Soares da Silva /   André  Coelho
+Matheus Soares da Silva / André Coelho
+
+Estudante de Sistemas para Internet
+
+Centro Universitário UNIESP
+
+## 📄 Licença
+
+Projeto desenvolvido para fins acadêmicos.
