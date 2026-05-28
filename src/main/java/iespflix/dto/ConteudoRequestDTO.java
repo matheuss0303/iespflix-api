@@ -31,11 +31,13 @@ public class ConteudoRequestDTO {
     @NotNull
     @DecimalMin("0.00")
     @DecimalMax("99.99")
-    private BigDecimal relevancia;
+    private Integer relevancia;
 
     private String sinopse;
 
     private String trailerUrl;
 
     private String genero;
+
+    private String imagemUrl;
 }

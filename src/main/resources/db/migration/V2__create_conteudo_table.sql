@@ -1,25 +1,14 @@
-CREATE TABLE conteudo (
-
-                          id UUID PRIMARY KEY,
-
-                          titulo VARCHAR(200) NOT NULL,
-
-                          tipo VARCHAR(10) NOT NULL,
-
-                          ano SMALLINT NOT NULL,
-
-                          duracao_minutos SMALLINT NOT NULL,
-
-                          relevancia DECIMAL(4,2) NOT NULL,
-
-                          sinopse TEXT,
-
-                          trailer_url VARCHAR(500),
-
-                          genero VARCHAR(50),
-
-                          criado_em TIMESTAMP NOT NULL,
-
-                          atualizado_em TIMESTAMP NOT NULL
-
+CREATE TABLE conteudos (
+                           id UUID PRIMARY KEY,
+                           titulo VARCHAR(255) NOT NULL,
+                           tipo VARCHAR(50),
+                           genero VARCHAR(100),
+                           ano INT,
+                           duracao_minutos INT,
+                           sinopse TEXT,
+                           imagem_url VARCHAR(255),
+                           relevancia INT,
+                           criado_em TIMESTAMP,
+                           atualizado_em TIMESTAMP,
+                           trailer_url VARCHAR(255)
 );

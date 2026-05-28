@@ -32,6 +32,7 @@ public class ConteudoService {
                 .criadoEm(LocalDateTime.now())
                 .atualizadoEm(LocalDateTime.now())
                 .build();
+        conteudo.setImagemUrl(dto.getImagemUrl());
 
         return conteudoRepository.save(conteudo);
     }
@@ -64,6 +65,7 @@ public class ConteudoService {
         conteudo.setSinopse(dto.getSinopse());
         conteudo.setTrailerUrl(dto.getTrailerUrl());
         conteudo.setGenero(dto.getGenero());
+        conteudo.setImagemUrl(dto.getImagemUrl());
 
         return conteudoRepository.save(conteudo);
     }

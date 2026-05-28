@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "conteudo")
+@Table(name = "conteudos")
 @Getter
 @Setter
 @Builder
@@ -32,7 +32,7 @@ public class ConteudoEntity {
     @Column(name = "duracao_minutos")
     private Short duracaoMinutos;
 
-    private BigDecimal relevancia;
+    private Integer relevancia;
 
     @Column(columnDefinition = "TEXT")
     private String sinopse;
@@ -47,4 +47,7 @@ public class ConteudoEntity {
 
     @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
+
+    @Column(name = "imagem_url")
+    private String imagemUrl;
 }
