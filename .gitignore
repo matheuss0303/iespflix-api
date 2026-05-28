@@ -35,4 +35,7 @@ build/
 ### Banco H2 ###
 data/
 
+### Frontend ###
+node_modules/
+iespflix-front/node_modules/
 
