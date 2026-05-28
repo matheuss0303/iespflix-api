@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Banco H2 ###
+data/
+
+
