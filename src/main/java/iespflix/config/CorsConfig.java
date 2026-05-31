@@ -20,8 +20,8 @@ public class CorsConfig {
                                 "http://localhost:5173",
                                 "http://localhost:3000",
                                 "http://localhost:3001",
-                                "https://6a1bcf4976f31eb338547ac8--iespflix.netlify.app",
-                                "https://iespflix.netlify.app"
+                                "https://iespflix.netlify.app",
+                                "https://6a1bcf4976f31eb338547ac8--iespflix.netlify.app"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
