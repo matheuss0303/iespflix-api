@@ -1689,7 +1689,51 @@ button {
         font-size: 36px;
     }
 
-    .categorias {
+    .categorias {git add .
         top: 165px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .modal-bg,
+    .trailer-modal {
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 99998 !important;
+    }
+
+    .modal,
+    .trailer-content {
+        position: relative !important;
+        overflow: visible !important;
+    }
+
+    .close {
+        position: fixed !important;
+        top: 15px !important;
+        right: 15px !important;
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50% !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        color: #fff !important;
+        border: 2px solid rgba(255,255,255,.15) !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 999999999 !important;
+        cursor: pointer !important;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+
+    .modal img,
+    .trailer-content iframe {
+        position: relative !important;
+        z-index: 1 !important;
     }
 }
