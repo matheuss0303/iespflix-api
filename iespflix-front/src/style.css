@@ -1793,3 +1793,33 @@ button {
     right: 16px !important;
     z-index: 999999999 !important;
 }
+
+.app:has(.modal-bg) .navbar,
+.app:has(.modal-bg) .categorias,
+.app:has(.trailer-modal) .navbar,
+.app:has(.trailer-modal) .categorias {
+    display: none !important;
+}
+
+.app:has(.modal-bg) .modal-bg {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999999 !important;
+    overflow-y: auto !important;
+    background: #050505 !important;
+}
+
+.app:has(.modal-bg) .modal {
+    margin-top: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+}
+
+.app:has(.modal-bg) .close {
+    display: flex !important;
+    position: fixed !important;
+    top: 14px !important;
+    right: 14px !important;
+    z-index: 9999999999 !important;
+}
