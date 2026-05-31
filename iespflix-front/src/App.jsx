@@ -437,7 +437,8 @@ export default function App() {
                 </section>
             )}
 
-            <section className="categorias">
+            {!selecionado && !trailer && (
+                <section className="categorias">
                 {[
                     "TODOS",
                     "FILME",
@@ -470,6 +471,7 @@ export default function App() {
                     </button>
                 ))}
             </section>
+            )}
 
             {admin && mostrarAdmin && (
                 <section className="admin-panel">
