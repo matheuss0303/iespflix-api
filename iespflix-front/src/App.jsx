@@ -335,7 +335,9 @@ export default function App() {
 
     return (
         <div className="app">
-            <header className={`navbar ${selecionado || trailer ? "navbar-hidden" : ""}`}>
+
+            {!selecionado && !trailer && (
+            <header className="navbar">
 
                 <h1 className="logo">IespFlix</h1>
 
@@ -390,6 +392,7 @@ export default function App() {
                     )}
                 </div>
             </header>
+            )}
 
             {destaque && (
                 <section
