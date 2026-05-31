@@ -132,6 +132,22 @@ export default function App() {
         localStorage.setItem("assistidos", JSON.stringify(novosAssistidos));
     }
 
+    function abrirTrailer(conteudo) {
+        if (!conteudo?.trailerUrl) {
+            alert("Trailer não disponível para este conteúdo.");
+            return;
+        }
+
+        let url = conteudo.trailerUrl;
+
+        if (url.includes("watch?v=")) {
+            url = url.replace("watch?v=", "embed/");
+        }
+
+        setTrailer(url);
+        alternarAssistido(conteudo.id);
+    }
+
     function progressoConteudo(id) {
         return assistidos.includes(id) ? 100 : 35;
     }
@@ -182,8 +198,10 @@ export default function App() {
                 )}
 
                 <button
+                    type="button"
                     className="favorite-btn"
                     onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                         alternarFavorito(conteudo.id);
                     }}
@@ -194,7 +212,11 @@ export default function App() {
                 <img
                     src={conteudo.imagemUrl}
                     alt={conteudo.titulo}
-                    onClick={() => setSelecionado(conteudo)}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelecionado(conteudo);
+                    }}
                 />
 
                 <div className="progress-bar">
@@ -204,7 +226,14 @@ export default function App() {
                     ></div>
                 </div>
 
-                <div className="card-body" onClick={() => setSelecionado(conteudo)}>
+                <div
+                    className="card-body"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelecionado(conteudo);
+                    }}
+                >
                     <h3>{conteudo.titulo}</h3>
                     <span>{conteudo.tipo}</span>
                     <p>{conteudo.genero}</p>
@@ -286,8 +315,11 @@ export default function App() {
                 />
 
                 <button
+                    type="button"
                     className="admin-btn"
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         setMostrarAdmin(!mostrarAdmin);
                         setEditandoId(null);
                         setForm(formInicial);
@@ -298,8 +330,13 @@ export default function App() {
 
                 <div className="profile-area">
                     <button
+                        type="button"
                         className="profile-btn"
-                        onClick={() => setPerfilAberto(!perfilAberto)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setPerfilAberto(!perfilAberto);
+                        }}
                     >
                         👤 Matheus
                     </button>
@@ -310,7 +347,7 @@ export default function App() {
                             <p>Plano: Premium</p>
                             <p>Favoritos: {favoritos.length}</p>
                             <p>Assistidos: {assistidos.length}</p>
-                            <button onClick={sair}>Sair</button>
+                            <button type="button" onClick={sair}>Sair</button>
                         </div>
                     )}
                 </div>
@@ -331,17 +368,24 @@ export default function App() {
 
                             <div className="hero-buttons">
                                 <button
-                                    onClick={() => {
-                                        setTrailer(destaque.trailerUrl);
-                                        alternarAssistido(destaque.id);
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        abrirTrailer(destaque);
                                     }}
                                 >
                                     ▶ Assistir
                                 </button>
 
                                 <button
+                                    type="button"
                                     className="secondary"
-                                    onClick={() => setSelecionado(destaque)}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setSelecionado(destaque);
+                                    }}
                                 >
                                     Mais informações
                                 </button>
@@ -361,9 +405,14 @@ export default function App() {
                     ...generos,
                 ].map((item) => (
                     <button
+                        type="button"
                         key={item}
                         className={aba === item ? "ativo" : ""}
-                        onClick={() => setAba(item)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setAba(item);
+                        }}
                     >
                         {item === "TODOS"
                             ? "Início"
@@ -510,7 +559,15 @@ export default function App() {
             {selecionado && (
                 <div className="modal-bg" onClick={() => setSelecionado(null)}>
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <button className="close" onClick={() => setSelecionado(null)}>
+                        <button
+                            type="button"
+                            className="close"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setSelecionado(null);
+                            }}
+                        >
                             X
                         </button>
 
@@ -538,17 +595,24 @@ export default function App() {
                             </p>
 
                             <button
-                                onClick={() => {
-                                    setTrailer(selecionado.trailerUrl);
-                                    alternarAssistido(selecionado.id);
+                                type="button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    abrirTrailer(selecionado);
                                 }}
                             >
                                 ▶ Assistir trailer
                             </button>
 
                             <button
+                                type="button"
                                 className="secondary"
-                                onClick={() => alternarFavorito(selecionado.id)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    alternarFavorito(selecionado.id);
+                                }}
                             >
                                 {favoritos.includes(selecionado.id)
                                     ? "❤️ Remover dos favoritos"
@@ -556,8 +620,13 @@ export default function App() {
                             </button>
 
                             <button
+                                type="button"
                                 className="secondary"
-                                onClick={() => alternarAssistido(selecionado.id)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    alternarAssistido(selecionado.id);
+                                }}
                             >
                                 {assistidos.includes(selecionado.id)
                                     ? "✅ Remover dos assistidos"
@@ -565,15 +634,25 @@ export default function App() {
                             </button>
 
                             <button
+                                type="button"
                                 className="edit-btn"
-                                onClick={() => prepararEdicao(selecionado)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    prepararEdicao(selecionado);
+                                }}
                             >
                                 ✏️ Editar
                             </button>
 
                             <button
+                                type="button"
                                 className="delete-btn"
-                                onClick={() => excluirConteudo(selecionado.id)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    excluirConteudo(selecionado.id);
+                                }}
                             >
                                 🗑️ Excluir
                             </button>
@@ -585,7 +664,15 @@ export default function App() {
             {trailer && (
                 <div className="trailer-modal" onClick={() => setTrailer(null)}>
                     <div className="trailer-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close" onClick={() => setTrailer(null)}>
+                        <button
+                            type="button"
+                            className="close"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setTrailer(null);
+                            }}
+                        >
                             X
                         </button>
 
@@ -594,6 +681,7 @@ export default function App() {
                             height="500"
                             src={trailer}
                             title="Trailer"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         />
                     </div>
