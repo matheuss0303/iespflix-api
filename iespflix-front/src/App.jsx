@@ -4,6 +4,8 @@ import "./style.css";
 
 export default function App() {
     const [logado, setLogado] = useState(false);
+    const [admin, setAdmin] = useState(false);
+
     const [loginForm, setLoginForm] = useState({ email: "", senha: "" });
 
     const [conteudos, setConteudos] = useState([]);
@@ -46,9 +48,11 @@ export default function App() {
 
     useEffect(() => {
         const usuarioLogado = localStorage.getItem("usuarioLogado");
+        const usuarioAdmin = localStorage.getItem("admin") === "true";
 
         if (usuarioLogado) {
             setLogado(true);
+            setAdmin(usuarioAdmin);
         }
 
         carregarConteudos();
@@ -60,18 +64,33 @@ export default function App() {
     function fazerLogin(e) {
         e.preventDefault();
 
-        localStorage.setItem("usuarioLogado", JSON.stringify(loginForm));
+        const ehAdmin =
+            loginForm.email === "admin@iespflix.com" &&
+            loginForm.senha === "123456";
+
+        localStorage.setItem("usuarioLogado", "true");
+        localStorage.setItem("admin", ehAdmin ? "true" : "false");
+
         setLogado(true);
+        setAdmin(ehAdmin);
     }
 
     function sair() {
         localStorage.removeItem("usuarioLogado");
+        localStorage.removeItem("admin");
         setLogado(false);
+        setAdmin(false);
         setPerfilAberto(false);
+        setMostrarAdmin(false);
     }
 
     async function salvarConteudo(e) {
         e.preventDefault();
+
+        if (!admin) {
+            alert("Acesso negado.");
+            return;
+        }
 
         if (editandoId) {
             await api.put(`/conteudos/${editandoId}`, form);
@@ -86,6 +105,11 @@ export default function App() {
     }
 
     async function excluirConteudo(id) {
+        if (!admin) {
+            alert("Acesso negado.");
+            return;
+        }
+
         const confirmar = confirm("Tem certeza que deseja excluir este conteúdo?");
         if (!confirmar) return;
 
@@ -95,6 +119,11 @@ export default function App() {
     }
 
     function prepararEdicao(conteudo) {
+        if (!admin) {
+            alert("Acesso negado.");
+            return;
+        }
+
         setForm({
             titulo: conteudo.titulo || "",
             tipo: conteudo.tipo || "FILME",
@@ -295,7 +324,10 @@ export default function App() {
                         <button type="submit">Entrar</button>
                     </form>
 
-                    <p>Login visual para apresentação. Use qualquer e-mail e senha.</p>
+                    <p>Use qualquer e-mail e senha para entrar.</p>
+                    <p className="admin-hint">
+                        Acesso administrativo exclusivo do desenvolvedor.
+                    </p>
                 </div>
             </div>
         );
@@ -314,19 +346,21 @@ export default function App() {
                     onChange={(e) => setBusca(e.target.value)}
                 />
 
-                <button
-                    type="button"
-                    className="admin-btn"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setMostrarAdmin(!mostrarAdmin);
-                        setEditandoId(null);
-                        setForm(formInicial);
-                    }}
-                >
-                    Admin
-                </button>
+                {admin && (
+                    <button
+                        type="button"
+                        className="admin-btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setMostrarAdmin(!mostrarAdmin);
+                            setEditandoId(null);
+                            setForm(formInicial);
+                        }}
+                    >
+                        Admin
+                    </button>
+                )}
 
                 <div className="profile-area">
                     <button
@@ -338,16 +372,19 @@ export default function App() {
                             setPerfilAberto(!perfilAberto);
                         }}
                     >
-                        👤 Matheus
+                        👤 {admin ? "Matheus Admin" : "Visitante"}
                     </button>
 
                     {perfilAberto && (
                         <div className="profile-menu">
-                            <p>Perfil: Matheus</p>
+                            <p>Perfil: {admin ? "Matheus Admin" : "Visitante"}</p>
                             <p>Plano: Premium</p>
                             <p>Favoritos: {favoritos.length}</p>
                             <p>Assistidos: {assistidos.length}</p>
-                            <button type="button" onClick={sair}>Sair</button>
+                            {admin && <p>Acesso: Administrador</p>}
+                            <button type="button" onClick={sair}>
+                                Sair
+                            </button>
                         </div>
                     )}
                 </div>
@@ -429,7 +466,7 @@ export default function App() {
                 ))}
             </section>
 
-            {mostrarAdmin && (
+            {admin && mostrarAdmin && (
                 <section className="admin-panel">
                     <h2>{editandoId ? "Editar Conteúdo" : "Cadastrar Conteúdo"}</h2>
 
@@ -594,68 +631,75 @@ export default function App() {
                                 <strong>Nota:</strong> ⭐ {selecionado.relevancia}
                             </p>
 
-                            <button
-                                type="button"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    abrirTrailer(selecionado);
-                                }}
-                            >
-                                ▶ Assistir trailer
-                            </button>
+                            <div className="modal-actions">
+                                <button
+                                    type="button"
+                                    className="modal-btn primary"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        abrirTrailer(selecionado);
+                                    }}
+                                >
+                                    ▶ Assistir Trailer
+                                </button>
 
-                            <button
-                                type="button"
-                                className="secondary"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    alternarFavorito(selecionado.id);
-                                }}
-                            >
-                                {favoritos.includes(selecionado.id)
-                                    ? "❤️ Remover dos favoritos"
-                                    : "🤍 Adicionar aos favoritos"}
-                            </button>
+                                <button
+                                    type="button"
+                                    className="modal-btn"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        alternarFavorito(selecionado.id);
+                                    }}
+                                >
+                                    {favoritos.includes(selecionado.id)
+                                        ? "❤️ Remover dos Favoritos"
+                                        : "🤍 Adicionar aos Favoritos"}
+                                </button>
 
-                            <button
-                                type="button"
-                                className="secondary"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    alternarAssistido(selecionado.id);
-                                }}
-                            >
-                                {assistidos.includes(selecionado.id)
-                                    ? "✅ Remover dos assistidos"
-                                    : "▶ Marcar como assistido"}
-                            </button>
+                                <button
+                                    type="button"
+                                    className="modal-btn"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        alternarAssistido(selecionado.id);
+                                    }}
+                                >
+                                    {assistidos.includes(selecionado.id)
+                                        ? "✅ Remover dos Assistidos"
+                                        : "▶ Marcar como Assistido"}
+                                </button>
 
-                            <button
-                                type="button"
-                                className="edit-btn"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    prepararEdicao(selecionado);
-                                }}
-                            >
-                                ✏️ Editar
-                            </button>
+                                {admin && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="modal-btn edit"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                prepararEdicao(selecionado);
+                                            }}
+                                        >
+                                            ✏️ Editar
+                                        </button>
 
-                            <button
-                                type="button"
-                                className="delete-btn"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    excluirConteudo(selecionado.id);
-                                }}
-                            >
-                                🗑️ Excluir
-                            </button>
+                                        <button
+                                            type="button"
+                                            className="modal-btn delete"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                excluirConteudo(selecionado.id);
+                                            }}
+                                        >
+                                            🗑️ Excluir
+                                        </button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
