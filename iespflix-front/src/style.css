@@ -1689,7 +1689,7 @@ button {
         font-size: 36px;
     }
 
-    .categorias {git add .
+    .categorias {
         top: 165px;
     }
 }
@@ -1736,4 +1736,26 @@ button {
         position: relative !important;
         z-index: 1 !important;
     }
+}
+
+/* MODAL SEMPRE ACIMA DA NAVBAR */
+
+.modal-bg {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+}
+
+.modal {
+    z-index: 999999 !important;
+}
+
+.trailer-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;git add .
+}
+
+.trailer-content {
+    z-index: 999999 !important;
 }
