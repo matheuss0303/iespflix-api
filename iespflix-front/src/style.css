@@ -1759,3 +1759,6 @@ button {
 .trailer-content {
     z-index: 999999 !important;
 }
+.navbar-hidden {
+    display: none !important;
+}

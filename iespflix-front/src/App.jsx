@@ -335,7 +335,8 @@ export default function App() {
 
     return (
         <div className="app">
-            <header className="navbar">
+            <header className={`navbar ${selecionado || trailer ? "navbar-hidden" : ""}`}>
+
                 <h1 className="logo">IespFlix</h1>
 
                 <input
