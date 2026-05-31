@@ -334,7 +334,8 @@ export default function App() {
     }
 
     return (
-        <div className="app">
+
+        <div className={`app ${selecionado || trailer ? "modal-open" : ""}`}>
 
             {!selecionado && !trailer && (
             <header className="navbar">
